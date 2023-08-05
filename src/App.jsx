@@ -1,5 +1,6 @@
 import './estilos/App.css';
 import BarraMenu from './componentes/BarraMenu';
+import RodaPe from './componentes/RodaPe';
 import { Outlet } from 'react-router-dom';
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
     <div className="App">
       <BarraMenu/>
       <Outlet/>
+      <RodaPe/>
     </div>
   );
 }

@@ -1,6 +1,11 @@
 
 function RodaPe(){
+    let date = new Date()
     return(
-        <p>Roda-pé</p>
+        <div style={{backgroundColor: '#CCC'}}>
+            <p>{date.toLocaleTimeString()}</p>
+        </div>
     )
 }
+
+export default RodaPe
