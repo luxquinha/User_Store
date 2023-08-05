@@ -7,7 +7,9 @@ function App() {
   return (
     <div className="App">
       <BarraMenu/>
-      <Outlet/>
+      <div className="conteudo" style={{width: '100vw', height: '87.5vh'}}>
+        <Outlet/>
+      </div>
       <RodaPe/>
     </div>
   );
