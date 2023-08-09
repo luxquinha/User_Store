@@ -5,10 +5,11 @@ import App from './App';
 // Importando elementos da biblioteca router-dom:
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 // Paginas da aplicação:
-import Login from './paginas/Login.jsx'
-import AdicionarProduto from './paginas/AdicionarProduto.jsx'
-import EditarProduto from './paginas/EditarProduto.jsx'
-import Produtos from './paginas/Produtos.jsx'
+import SignIn from './paginas/login/SingIn'
+import SignUp from './paginas/login/SignUp.jsx'
+import AdicionarProduto from './paginas/master/AdicionarProduto.jsx'
+import EditarProduto from './paginas/master/EditarProduto.jsx'
+import Produtos from './paginas/master/Produtos.jsx'
 
 const rotas = createBrowserRouter([
   {
@@ -17,7 +18,11 @@ const rotas = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Login/>
+        element: <SignIn/>
+      },
+      {
+        path: '/signUp',
+        element: <SignUp/>
       },
       {
         path: '/produtos',

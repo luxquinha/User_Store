@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -9,7 +9,7 @@ const userFormSchema = z.object({
     email: z.string().nonempty('Campo obrigatório').email('Formato de email inválido'),
     password: z.string().min(6, 'Tamanho mínimo de 6 caracteres').nonempty('Campo obrigatório')
 })
-function Login(){
+function SignIn(){
     const [thereIs, setThereIs] = useState()
     const goTo = useNavigate()
     const [users, setUsers] = useState([{
@@ -67,10 +67,12 @@ function Login(){
                     {errors.password && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.password.message}</p>)}
                 </div>
                 {thereIs && (<p style={{fontSize: '0.8rem', color: 'red'}}>{thereIs}</p>)}
-                <button type="submit" className="btn btn-outline-primary">Submit</button>
+                <span style={{marginBottom: '8px'}}>Have an account? <Link to={'/signUp'}>Sign up</Link> </span>
+                
+                <button type="submit" className="btn btn-outline-primary">Sign In</button>
             </form>
         </div>
     )
 }
 
-export default Login
+export default SignIn
