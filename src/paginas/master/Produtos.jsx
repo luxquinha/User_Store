@@ -19,7 +19,7 @@ function Produtos(){
     return(
         <div style={{textAlign: 'center'}}>
             <Link to={'/adicionarProduto'}>
-                <button type="button" class="btn btn-outline-info" style={{margin: '10px 10px', textAlign: 'right'}}>+ Adicionar Produto</button>
+                <button type="button" className="btn btn-outline-info" style={{margin: '10px 10px', textAlign: 'right'}}>+ Adicionar Produto</button>
             </Link>
             <table className="table table-striped">
                 <thead>

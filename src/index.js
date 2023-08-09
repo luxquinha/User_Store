@@ -4,6 +4,7 @@ import './estilos/index.css';
 import App from './App';
 // Importando elementos da biblioteca router-dom:
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { LoginProvider } from './context/loginContext';
 // Paginas da aplicação:
 import SignIn from './paginas/login/SingIn'
 import SignUp from './paginas/login/SignUp.jsx'
@@ -43,6 +44,8 @@ const rotas = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={rotas} />
+    <LoginProvider>
+      <RouterProvider router={rotas} />
+    </LoginProvider>
   </React.StrictMode>
 );

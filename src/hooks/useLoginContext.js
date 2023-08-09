@@ -1,8 +1,8 @@
-import { loginContext } from "../context/loginContext";
+import { LoginContext } from "../context/loginContext";
 import { useContext } from "react";
 
 function useLoginContext(){
-    const contextLogin = useContext(loginContext)
+    const contextLogin = useContext(LoginContext)
 
     if(contextLogin === undefined){
         throw new Error('Esta fora de contexto');
