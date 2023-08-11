@@ -16,7 +16,6 @@ function BarraMenu(){
         isLogged(false)
         goTo('/')
     }
-    console.log(user[0]);
     return(
         <div style={{display: 'flex', justifyContent: 'space-between', backgroundColor: '#CCC'}}>
             <h3>User Store</h3>
