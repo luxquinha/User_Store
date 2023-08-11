@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import useCrudContext from '../../hooks/useCrudContext' 
 
 function Produtos(){
-    const products = useCrudContext()
+    const {products} = useCrudContext()
 
     return(
         <div style={{textAlign: 'center'}}>
