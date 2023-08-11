@@ -30,7 +30,7 @@ function MainRoutes(){
                     <AdicionarProduto/>
                 </PrivateRoutes>
                 }/>
-                <Route path='/editarProduto' element={
+                <Route path='/editarProduto/:id' element={
                 <PrivateRoutes>
                     <EditarProduto/>
                 </PrivateRoutes>

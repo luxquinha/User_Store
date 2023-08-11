@@ -26,8 +26,25 @@ function CrudContextProvider({children}){
         setProducts(newProduct)
     }
 
+    const editProduct = (productEditted)=>{
+        const editProduct = products.map(product => {
+            if(product.id === productEditted.id){
+                product.name = productEditted.name
+                product.price = productEditted.price
+                product.qtd = productEditted.qtd
+                product.qtdType = productEditted.qtdType
+                product.description = productEditted.description
+                product.id = productEditted.id
+            }else{
+                product = product
+            }
+        })
+        // setProducts(editProduct)
+        console.log(editProduct);
+    }
+
     return (
-        <CrudContext.Provider value={{products, addProduct}} >
+        <CrudContext.Provider value={{products, addProduct, editProduct}} >
             {children}
         </CrudContext.Provider>
     )

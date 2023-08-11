@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function ProdutoLinha({produto}){
@@ -8,7 +9,7 @@ function ProdutoLinha({produto}){
             <td>R$ {produto?.price}</td>
             <td>{produto?.qtd} {produto?.qtdType}</td>
             <td>{produto?.description}</td>
-            <td><button>Editar</button></td>
+            <td><Link to={`/editarProduto/${produto?.id}`}>Editar</Link></td>
             <td><button>Excluir</button></td>
         </tr>
     )
