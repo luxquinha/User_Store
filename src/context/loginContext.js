@@ -5,6 +5,7 @@ export const LoginContext = createContext(null)
 export const LoginProvider = ({children})=>{
     const [logged, setLogged] = useState(false)
     const [createId, setCreateId] = useState(0)
+    const [timeLogIn, setTimeLogIn] = useState()
     const [userLogged, setUserLogged] = useState({})
     const [users, setUsers] = useState([{
         id: createId,
@@ -27,8 +28,10 @@ export const LoginProvider = ({children})=>{
         if(actualUser !== null){
             let match = passwordMatch(data.password, actualUser[0]?.password)
             if(match){
+                let timeOfLog = new Date().toLocaleTimeString()
                 setLogged(true)
                 setUserLogged(actualUser)
+                setTimeLogIn(timeOfLog)
                 return true
             }
             else{
@@ -39,7 +42,7 @@ export const LoginProvider = ({children})=>{
         }
     }
     return(
-        <LoginContext.Provider value={{isValid, setLogged, logged, userLogged, setUserLogged}}>
+        <LoginContext.Provider value={{isValid, setLogged, logged, userLogged, setUserLogged, timeLogIn}}>
             {children}
         </LoginContext.Provider>
     )

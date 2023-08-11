@@ -1,9 +1,10 @@
+import useLoginContext from "../hooks/useLoginContext"
 
 function RodaPe(){
-    let date = new Date()
+    const { logged, timeLogIn } = useLoginContext()
     return(
-        <div style={{backgroundColor: '#CCC', textAlign: 'center'}}>
-            <p>{date.toLocaleTimeString()}</p>
+        <div style={{backgroundColor: '#CCC', textAlign: 'center', borderBottom: '0px'}}>
+            {logged ? (<span>Usuário acessou às {timeLogIn}</span>) : (<span>Seja bem-vindo à User Store</span>)}
         </div>
     )
 }

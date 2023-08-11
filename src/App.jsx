@@ -1,16 +1,11 @@
+import React from 'react';
 import './estilos/App.css';
-import BarraMenu from './componentes/BarraMenu';
-import RodaPe from './componentes/RodaPe';
-import { Outlet } from 'react-router-dom';
-
+import MainRoutes from './Rotas/MainRoutes';
+ 
 function App() {
   return (
     <div className="App">
-      <BarraMenu/>
-      <div className="conteudo" style={{width: '100vw', height: '87.5vh'}}>
-        <Outlet/>
-      </div>
-      <RodaPe/>
+      <MainRoutes/>
     </div>
   );
 }

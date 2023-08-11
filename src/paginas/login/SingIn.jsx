@@ -1,9 +1,14 @@
+// Biblioteca para estilização:
 import 'bootstrap/dist/css/bootstrap.min.css'
+// Gerenciador de estados:
 import { useState } from 'react'
+// Navegação das páginas:
 import { useNavigate, Link } from 'react-router-dom'
+// Bibliotecas responsáveis pela validação de formulários:
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+// Contexto no qual a aplicação está inserida:
 import useLoginContext from '../../hooks/useLoginContext.js'
 
 const userFormSchema = z.object({
@@ -14,7 +19,7 @@ function SignIn(){
     const [invalid, setInvalid] = useState()
     const goTo = useNavigate()
     const {isValid}  = useLoginContext()
-    const { register, handleSubmit, formState: {errors} } = useForm({
+    const { register, handleSubmit, formState: {errors, isSubmitting} } = useForm({
         mode: 'onSubmit', 
         resolver: zodResolver(userFormSchema),
     })
@@ -26,7 +31,7 @@ function SignIn(){
             setInvalid('E-mail ou senha inválidos')
         }
     }
-    
+
     return(
         <div style={{height: '100%',display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
             <form style={{width: '30rem', height: '20rem', display:'flex', flexDirection: 'column' ,alignItems: 'center', justifyContent: 'center'}}
@@ -48,7 +53,7 @@ function SignIn(){
                 {invalid && (<p style={{fontSize: '0.8rem', color: 'red'}}>{invalid}</p>)}
                 <span style={{marginBottom: '8px'}}>Have an account? <Link to={'/signUp'}>Sign up</Link> </span>
                 
-                <button type="submit" className="btn btn-outline-primary">Sign In</button>
+                <button type="submit" className="btn btn-outline-primary" disabled={isSubmitting}>{isSubmitting? 'Sign in...':'Sign in'}</button>
             </form>
         </div>
     )
