@@ -25,7 +25,6 @@ function CrudContextProvider({children}){
         setProducts(conteudo)
     }
 
-    console.log(products);
     const addProduct = (data)=>{
         atualizarDados()
         const newProduct = [...products,{

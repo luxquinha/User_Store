@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import useLoginContext from '../../hooks/useLoginContext.js'
 
 const userFormSchema = z.object({
     email: z.string().nonempty('Campo obrigatório').email('Formato de email inválido'),
@@ -15,12 +16,15 @@ const userFormSchema = z.object({
 })
 function SignUp(){
     const goTo = useNavigate()
+    const { createUser } = useLoginContext()
     const { register, handleSubmit, formState: {errors} } = useForm({
         mode: 'onSubmit', 
         resolver: zodResolver(userFormSchema),
     })
     const userValidation = (data) =>{
-        console.log(data);
+        if(createUser(data)){
+            goTo('/')
+        }
     }
     return(
         <div style={{height: '100%',display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
