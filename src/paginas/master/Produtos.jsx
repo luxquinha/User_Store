@@ -2,9 +2,15 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import ProdutoLinha from '../../componentes/ProdutoLinha'
 import { Link } from 'react-router-dom'
 import useCrudContext from '../../hooks/useCrudContext' 
+import { useEffect } from 'react'
 
 function Produtos(){
-    const {products} = useCrudContext()
+    const {products, atualizarDados} = useCrudContext()
+    useEffect(()=>{
+        if(products.length === 0){
+            atualizarDados()
+        }
+    },[])
 
     return(
         <div style={{textAlign: 'center'}}>
@@ -21,7 +27,7 @@ function Produtos(){
                     </tr>
                 </thead>
                 <tbody>
-                    {products.map(product =>(
+                    {products?.map(product =>(
                         <ProdutoLinha key={product.id} produto={product}/>
                     ))}
                 </tbody>

@@ -1,4 +1,4 @@
-import {createContext, useState} from "react";
+import {createContext, useEffect, useState} from "react";
 
 export const LoginContext = createContext(null)
 
@@ -14,6 +14,10 @@ export const LoginProvider = ({children})=>{
         password: '123456',
         master: true
     }])
+    let usuariosCadastradosKey = 'usuarios' 
+    useEffect(()=>{
+        localStorage.setItem(usuariosCadastradosKey, JSON.stringify(users))
+    },[users])
     const hasUser = (email)=>{
         const user = users.filter(user =>
             user.email === email

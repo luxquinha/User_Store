@@ -1,19 +1,33 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const CrudContext = createContext()
 
 function CrudContextProvider({children}){
-    const [id, setId] = useState(1)
-    const [products, setProducts] = useState([{
-        name: 'Pão',
-        price: 4.50,
-        qtd: 10,
-        description: 'Pão de hamburguer com alpiste',
-        qtdType: 'Und',
-        id: 0
-    }])
+    const productsKey = 'produtos'
+    const [id, setId] = useState(0)
+    const [products, setProducts] = useState([])
 
+    useEffect(()=>{
+        if(products.length>=1){
+            localStorage.setItem(productsKey, JSON.stringify(products))
+        }
+    },[products])
+    
+    const atualizarDados = ()=>{
+        if(products.length === 0 && localStorage.getItem(productsKey) === null){
+            localStorage.setItem(productsKey, JSON.stringify(products))
+        }
+        const conteudo = JSON.parse(localStorage.getItem(productsKey) || '[]')
+        const idAtual = Number(conteudo[conteudo.length-1]?.id)
+        if(!isNaN(idAtual)){
+            setId(idAtual+1)
+        }
+        setProducts(conteudo)
+    }
+
+    console.log(products);
     const addProduct = (data)=>{
+        atualizarDados()
         const newProduct = [...products,{
             name: data.name,
             price: Number(data.price),
@@ -44,7 +58,7 @@ function CrudContextProvider({children}){
     }
 
     return (
-        <CrudContext.Provider value={{products, addProduct, editProduct}} >
+        <CrudContext.Provider value={{products, addProduct, editProduct, atualizarDados}} >
             {children}
         </CrudContext.Provider>
     )

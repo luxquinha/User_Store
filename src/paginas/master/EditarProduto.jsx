@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -10,8 +10,11 @@ import 'bootstrap/dist/css/bootstrap.min.css'
         name: z.string().nonempty('Campo obrigatório'),
         price: z.string().nonempty('Informe o valor do produto').regex(/([0-9]{1,}.?)/g, 'Tipo inválido'),
         qtd: z.string().nonempty('Informe a quantidade do produto').regex(/[0-9]/g, 'Tipo inválido'),
-        description: z.string().max(60, 'Excedeu a quantidade máxima de caracteres')
+        description: z.string().max(60, 'Excedeu a quantidade máxima de caracteres'),
+        qtdType: z.string().nonempty('Select a type')
     })
+
+    
 
 function EditarProduto(){
     const { products } = useCrudContext()
@@ -23,6 +26,11 @@ function EditarProduto(){
         mode: 'onSubmit',
         resolver: zodResolver(objectFormSchema)
     })
+
+    useEffect(()=>{
+        setProduct(products[id])
+    },[id])
+
     const editedProduct = (data)=>{
         console.log(data);
         // goTo('/produtos')
@@ -34,26 +42,29 @@ function EditarProduto(){
             >
                 <div className="col-md-10">
                     <label for="inputZip" className="form-label">Nome:</label>
-                    <input type="text" className="form-control" id="inputZip" placeholder={`${products[id]?.name}`} {...register('name')} />
+                    <input type="text" className="form-control" id="inputZip" 
+                    value={`${product?.name}`} 
+                    onChange={(event)=>setProduct.name(event.target.value)}
+                    {...register('name')} />
                     {errors.name && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.name.message}</p>)}
                 </div>
                 <div style={{display: 'flex', flexDirection: 'row'}}>
                     <div className="col-md-4" style={{marginRight: '10px'}}>
                         <label htmlFor="inputState" className="form-label">Preço:</label>
-                        <input type="text" className="form-control" id="inputZip" placeholder={products[id]?.price}
+                        <input type="text" className="form-control" id="inputZip" placeholder={product?.price}
                         {...register('price')}
                         />
                         {errors.price && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.price.message}</p>)}
                     </div>
                     <div className="col-md-3" style={{marginRight: '5px'}}>
                         <label htmlFor="inputState" className="form-label">Quantidade:</label>
-                        <input type="number" className="form-control" id="inputZip" placeholder={products[id]?.qtd} 
+                        <input type="number" className="form-control" id="inputZip" placeholder={product?.qtd} 
                         {...register('qtd')}
                         />
                         {errors.qtd && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.qtd.message}</p>)}
                     </div>
                     <div className="input-group" style={{height: '2.2rem', width:'6rem', marginTop:'30px'}}>
-                        <select className="form-select" id="inputGroupSelect01" {...register('qtdType')} placeholder={products[id]?.qtdType}>
+                        <select className="form-select" id="inputGroupSelect01" {...register('qtdType')} placeholder={product?.qtdType}>
                             <option>-Type-</option>
                             <option value="Kg">Kg</option>
                             <option value="L">L</option>
@@ -63,7 +74,7 @@ function EditarProduto(){
                 </div>
                 <div className="col-md-10">
                     <label for="inputCity" className="form-label">Descrição:</label>
-                    <textarea name="inputCity" className="form-control" id="inputCity" rows="3" {...register('description')} placeholder={products[id]?.description}></textarea>
+                    <textarea name="inputCity" className="form-control" id="inputCity" rows="3" {...register('description')} placeholder={product?.description}></textarea>
                     {errors.description && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.description.message}</p>)}
                 </div>
                     <button type="submit" className="btn btn-outline-primary col-md-10">Salvar Produto</button>
