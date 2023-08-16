@@ -3,6 +3,8 @@ import ProdutoLinha from '../../componentes/ProdutoLinha'
 import { Link } from 'react-router-dom'
 import useCrudContext from '../../hooks/useCrudContext' 
 import { useEffect } from 'react'
+import { PlusIcon } from "../../icones/icones.js"
+
 
 function Produtos(){
     const {products, atualizarDados} = useCrudContext()
@@ -15,7 +17,12 @@ function Produtos(){
     return(
         <div style={{textAlign: 'center'}}>
             <Link to={'/adicionarProduto'}>
-                <button type="button" className="btn btn-outline-info" style={{margin: '10px 10px', textAlign: 'right'}}>+ Adicionar Produto</button>
+                <button type="button" className="btn btn-outline-info" style={{
+                margin: '10px 10px', 
+                textAlign: 'right',
+                lineHeight: '1.8rem',
+                fontWeight: '600'
+                }}>{PlusIcon} Adicionar Produto</button>
             </Link>
             <table className="table table-striped">
                 <thead>
@@ -24,6 +31,7 @@ function Produtos(){
                         <th scope="col">Preço</th>
                         <th scope="col">Quantidade</th>
                         <th scope="col">Descrição</th>
+                        <th scope="col">Ações</th>
                     </tr>
                 </thead>
                 <tbody>

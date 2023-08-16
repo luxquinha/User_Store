@@ -36,6 +36,7 @@ function CrudContextProvider({children}){
         }]
         setId(id+1)
         setProducts(newProduct)
+        alert('Produto cadastrado com sucesso!')
     }
 
     const editProduct = (productEditted, idProduct)=>{

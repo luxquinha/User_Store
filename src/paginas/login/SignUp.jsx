@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useState } from 'react'
+import { PlusUserIcon } from '../../icones/icones.js'
 import { useNavigate, Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -54,7 +54,7 @@ function SignUp(){
                 {errors.confirmation && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.confirmation.message}</p>)}
                 <span style={{marginBottom: '8px'}}>Already have an account? <Link to={'/'}>Sign up</Link> </span>
                 
-                <button type="submit" className="btn btn-outline-primary">Sign Up</button>
+                <button type="submit" className="btn btn-outline-primary">{PlusUserIcon} Sign Up</button>
             </form>
         </div>
     )

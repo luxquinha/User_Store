@@ -47,7 +47,7 @@ function EditarProduto(){
         }else if(data.description !== '' && product.description === ''){
             data.description = data.description
         }else if(product.description !== '' && data.description === ''){
-            if(!window.confirm('Deseja deixar o produto sem descrição?')){
+            if(window.confirm('Deseja manter o produto com a mesma descrição?')){
                 data.description = product.description
             }else{
                 data.description = data.description
