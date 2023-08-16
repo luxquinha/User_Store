@@ -7,17 +7,15 @@ import {useParams, useNavigate} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
     const objectFormSchema = z.object({
-        name: z.string().nonempty('Campo obrigatório'),
-        price: z.string().nonempty('Informe o valor do produto').regex(/([0-9]{1,}.?)/g, 'Tipo inválido'),
-        qtd: z.string().nonempty('Informe a quantidade do produto').regex(/[0-9]/g, 'Tipo inválido'),
+        name: z.string(),
+        price: z.string(),
+        qtd: z.string(),
         description: z.string().max(60, 'Excedeu a quantidade máxima de caracteres'),
-        qtdType: z.string().nonempty('Select a type')
+        qtdType: z.string()
     })
 
-    
-
 function EditarProduto(){
-    const { products } = useCrudContext()
+    const { products, editProduct } = useCrudContext()
     const [product, setProduct] = useState({})
     const goTo = useNavigate()
     let { id }= useParams()
@@ -31,9 +29,37 @@ function EditarProduto(){
         setProduct(products[id])
     },[id])
 
+    const nonChanges = (data)=>{
+        if(data.name === ''){
+            data.name = product.name
+        }
+        if(data.price === ''){
+            data.price = product.price
+        }
+        if(data.qtd === ''){
+            data.qtd = Number(product.qtd)
+        }
+        if(data.qtdType === ''){
+            data.qtdType = product.qtdType
+        }
+        if(data.description === '' && product.description === ''){
+            data.description = ''
+        }else if(data.description !== '' && product.description === ''){
+            data.description = data.description
+        }else if(product.description !== '' && data.description === ''){
+            if(!window.confirm('Deseja deixar o produto sem descrição?')){
+                data.description = product.description
+            }else{
+                data.description = data.description
+            }
+        }
+
+        return data
+    }
     const editedProduct = (data)=>{
-        console.log(data);
-        // goTo('/produtos')
+        const dataModified = nonChanges(data)
+        editProduct(dataModified, id)
+        goTo('/produtos')
     }
     return(
         <div style={{height: '100%' ,display: 'flex', alignItems: 'center', alignItems: 'center', justifyContent: 'center'}}>
@@ -41,9 +67,9 @@ function EditarProduto(){
             onSubmit={handleSubmit(editedProduct)}
             >
                 <div className="col-md-10">
-                    <label for="inputZip" className="form-label">Nome:</label>
+                    <label htmlFor="inputZip" className="form-label">Nome:</label>
                     <input type="text" className="form-control" id="inputZip" 
-                    value={`${product?.name}`} 
+                    placeholder={`${product?.name}`} 
                     onChange={(event)=>setProduct.name(event.target.value)}
                     {...register('name')} />
                     {errors.name && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.name.message}</p>)}
@@ -64,16 +90,16 @@ function EditarProduto(){
                         {errors.qtd && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.qtd.message}</p>)}
                     </div>
                     <div className="input-group" style={{height: '2.2rem', width:'6rem', marginTop:'30px'}}>
-                        <select className="form-select" id="inputGroupSelect01" {...register('qtdType')} placeholder={product?.qtdType}>
-                            <option>-Type-</option>
+                        <select className="form-select" id="inputGroupSelect01" {...register('qtdType')}>
+                            <option value={product?.qtdType}>{product?.qtdType}</option>
                             <option value="Kg">Kg</option>
                             <option value="L">L</option>
-                            <option value="Und">UND</option>
+                            <option value="Und">Und</option>
                         </select>
                     </div>
                 </div>
                 <div className="col-md-10">
-                    <label for="inputCity" className="form-label">Descrição:</label>
+                    <label htmlFor="inputCity" className="form-label">Descrição:</label>
                     <textarea name="inputCity" className="form-control" id="inputCity" rows="3" {...register('description')} placeholder={product?.description}></textarea>
                     {errors.description && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.description.message}</p>)}
                 </div>

@@ -18,15 +18,12 @@ export const LoginProvider = ({children})=>{
     useEffect(()=>{
         if(users.length>=2){
             localStorage.setItem(usuariosCadastradosKey, JSON.stringify(users))
-        }else{
-            atualizarDados()
-        }
-    },[users])
-    
-    const atualizarDados = ()=>{
-        if(users.length === 1 && localStorage.getItem(usuariosCadastradosKey) === null){
+        }else if(users.length === 1 && localStorage.getItem(usuariosCadastradosKey) === null){
             localStorage.setItem(usuariosCadastradosKey, JSON.stringify(users))
         }
+        
+    },[users])
+    const atualizarDados = ()=>{
         const conteudo = JSON.parse(localStorage.getItem(usuariosCadastradosKey) || '[]')
         const idAtual = Number(conteudo[conteudo.length-1]?.id)
         if(!isNaN(idAtual)){

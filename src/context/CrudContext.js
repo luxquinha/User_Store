@@ -10,13 +10,12 @@ function CrudContextProvider({children}){
     useEffect(()=>{
         if(products.length>=1){
             localStorage.setItem(productsKey, JSON.stringify(products))
+        }else if(products.length === 0 && localStorage.getItem(productsKey) === null){
+            localStorage.setItem(productsKey, JSON.stringify(products))
         }
     },[products])
     
     const atualizarDados = ()=>{
-        if(products.length === 0 && localStorage.getItem(productsKey) === null){
-            localStorage.setItem(productsKey, JSON.stringify(products))
-        }
         const conteudo = JSON.parse(localStorage.getItem(productsKey) || '[]')
         const idAtual = Number(conteudo[conteudo.length-1]?.id)
         if(!isNaN(idAtual)){
@@ -39,23 +38,20 @@ function CrudContextProvider({children}){
         setProducts(newProduct)
     }
 
-    const editProduct = (productEditted)=>{
-        const editProduct = products.map(product => {
-            if(product.id === productEditted.id){
-                product.name = productEditted.name
-                product.price = productEditted.price
-                product.qtd = productEditted.qtd
-                product.qtdType = productEditted.qtdType
-                product.description = productEditted.description
-                product.id = productEditted.id
-            }else{
-                product = product
-            }
-        })
-        // setProducts(editProduct)
-        console.log(editProduct);
-    }
+    const editProduct = (productEditted, idProduct)=>{
+        atualizarDados()
+        products[idProduct].name = productEditted.name
+        products[idProduct].price = productEditted.price
+        products[idProduct].qtd = productEditted.qtd
+        products[idProduct].qtdType = productEditted.qtdType
+        products[idProduct].description = productEditted.description
+        // atualiza o estado dos produtos e envia pro localStorage:
+        setProducts(products)
+        localStorage.setItem(productsKey, JSON.stringify(products))
 
+        return
+    }
+    
     return (
         <CrudContext.Provider value={{products, addProduct, editProduct, atualizarDados}} >
             {children}
