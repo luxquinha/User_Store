@@ -1,11 +1,15 @@
-import React from "react"
+// Biblioteca de estilização:
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useNavigate } from 'react-router-dom'
+// Responsáveis pela validação do form:
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+// Hook para navegação entre páginas:
+import { useNavigate } from 'react-router-dom'
+// Contexto da página:
 import useCrudContext from '../../hooks/useCrudContext.js'
 
+    // Fazendo a validação do from com a biblioteca 'zod':
     const objectFormSchema = z.object({
         name: z.string().nonempty('Campo obrigatório'),
         price: z.string().nonempty('Informe o valor do produto').regex(/([0-9]{1,}.?)/g, 'Tipo inválido'),
@@ -15,13 +19,16 @@ import useCrudContext from '../../hooks/useCrudContext.js'
     })
 
 function AdicionarProduto(){
+    // Hook para navegação:
     const goTo = useNavigate()
+    // Chamando uma função do contexto em que a página está inserida:
     const { addProduct } = useCrudContext()
+    // Métodos e estados para as entradas do form:
     const { register, handleSubmit, formState:{errors} } = useForm({
         resolver: zodResolver(objectFormSchema),
         mode: 'onSubmit'
     })
-
+    // Função que adiciona o produto e muda de página:
     const createProduct = (data)=>{
         addProduct(data)
         goTo('/produtos')
@@ -32,6 +39,7 @@ function AdicionarProduto(){
             <form className="row g-3" style={{height: '100%', width: '30rem',display: 'flex', flexDirection: 'column', textAlign:'left'}}
             onSubmit={handleSubmit(createProduct)}
             >
+                {/* Nome do produto: */}
                 <div className="col-md-10">
                     <label htmlFor="inputZip" className="form-label">Nome:</label>
                     <input type="text" className="form-control" id="inputZip" placeholder="Nome do produto" 
@@ -39,6 +47,7 @@ function AdicionarProduto(){
                     />
                     {errors.name && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.name.message}</p>)}
                 </div>
+                {/* Preço do produto: */}
                 <div style={{display: 'flex', flexDirection: 'row'}}>
                     <div className="col-md-4" style={{marginRight: '10px'}}>
                         <label htmlFor="inputState" className="form-label">Preço unitário:</label>
@@ -47,6 +56,7 @@ function AdicionarProduto(){
                         />
                         {errors.price && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.price.message}</p>)}
                     </div>
+                    {/* Quantidade do produto: */}
                     <div className="col-md-3" style={{marginRight: '5px'}}>
                         <label htmlFor="inputState" className="form-label">Quantidade:</label>
                         <input type="number" className="form-control" id="inputZip" placeholder="0" 
@@ -54,6 +64,7 @@ function AdicionarProduto(){
                         />
                         {errors.qtd && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.qtd.message}</p>)}
                     </div>
+                    {/* O tipo da quantidade: */}
                     <div className="input-group" style={{height: '2.2rem', width:'6rem', marginTop:'30px'}}>
                         <select className="form-select" id="inputGroupSelect01" {...register('qtdType')}>
                             <option>-Type-</option>
@@ -63,6 +74,7 @@ function AdicionarProduto(){
                         </select>
                     </div>
                 </div>
+                {/* Descrição do produto: */}
                 <div className="col-md-10">
                     <label htmlFor="inputCity" className="form-label">Descrição:</label>
                     <textarea name="inputCity" className="form-control" id="inputCity" rows="3" 

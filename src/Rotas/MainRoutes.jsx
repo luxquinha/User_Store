@@ -10,6 +10,7 @@ import BarraMenu from '../componentes/BarraMenu.jsx'
 import RodaPe from '../componentes/RodaPe.jsx'
 // Elementos responsáveis pelas rotas:
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+// Rotas privadas da aplicação:
 import PrivateRoutes from './PrivateRoutes.jsx'
 
 function MainRoutes(){
@@ -17,9 +18,12 @@ function MainRoutes(){
         <BrowserRouter>
           <BarraMenu/>
           <div className="conteudo" style={{width: '100vw', height: '87.2vh'}}>
+            {/* // Rotas de toda a aplicação: */}
             <Routes>
+                {/* Rotas públicas: */}
                 <Route path='/' element={<SignIn/>}/>
                 <Route path='/signUp' element={<SignUp/>}/>
+                {/* Rotas privadas: */}
                 <Route path='/produtos' element={
                 <PrivateRoutes>
                     <Produtos/>

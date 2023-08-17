@@ -1,12 +1,19 @@
+// Biblioteca de estilização:
+import 'bootstrap/dist/css/bootstrap.min.css'
+// Hooks para gerenciar os estados da página:
 import React, { useState, useEffect } from "react"
+// Responsáveis pelas validação do form:
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import useCrudContext from "../../hooks/useCrudContext"
+// Hooks para navegação entre páginas:
 import {useParams, useNavigate} from 'react-router-dom'
+// Contexto da página:
+import useCrudContext from "../../hooks/useCrudContext"
+// Ícones da página:
 import { EditionIcon } from "../../icones/icones"
-import 'bootstrap/dist/css/bootstrap.min.css'
 
+    // Validação do form feita com a biblioteca 'zod':
     const objectFormSchema = z.object({
         name: z.string(),
         price: z.string(),
@@ -16,24 +23,29 @@ import 'bootstrap/dist/css/bootstrap.min.css'
     })
 
 function EditarProduto(){
+    // Chamando variavéis e funções do contexto em que a página está inserida:
     const { products, editProduct } = useCrudContext()
+    // Responsável por setar o produto correto para edição:
     const [product, setProduct] = useState({})
-    const goTo = useNavigate()
     let { id }= useParams()
     id = Number(id)
+    // Hook para navegar após a validação:
+    const goTo = useNavigate()
+    // Métodos para validação do form:
     const { register, handleSubmit, formState:{errors}} = useForm({
         mode: 'onSubmit',
         resolver: zodResolver(objectFormSchema)
     })
+    // Atualiza o produto sempre que mudar o parâmetro id da URL:
     useEffect(()=>{
         setProduct(findEquivalenteProduct())
     },[id])
-
+    // Encontra o produto de acordo com o id vindo da URL e retorna:
     const findEquivalenteProduct = ()=>{
         const Equivalente = products.filter(product => product.id === id)
         return Equivalente[0]
     }
-
+    // Verifica os campos que não foram modificados na aplicação:
     const nonChanges = (data)=>{
         if(data.name === ''){
             data.name = product.name
@@ -47,6 +59,7 @@ function EditarProduto(){
         if(data.qtdType === ''){
             data.qtdType = product.qtdType
         }
+        // Casos em que a descrição é apagada ou mantida:
         if(data.description === '' && product.description === ''){
             data.description = ''
         }else if(data.description !== '' && product.description === ''){
@@ -58,19 +71,21 @@ function EditarProduto(){
                 data.description = data.description
             }
         }
-
         return data
     }
+    // Função que edita o produto e muda a página:
     const editedProduct = (data)=>{
         const dataModified = nonChanges(data)
         editProduct(dataModified, id)
         goTo('/produtos')
     }
+
     return(
         <div style={{height: '100%' ,display: 'flex', alignItems: 'center', alignItems: 'center', justifyContent: 'center'}}>
             <form className="row g-3" style={{height: '100%', width: '30rem',display: 'flex', flexDirection: 'column', textAlign: 'left'}}
             onSubmit={handleSubmit(editedProduct)}
             >
+                {/* Nome do produto: */}
                 <div className="col-md-10">
                     <label htmlFor="inputZip" className="form-label">Nome:</label>
                     <input type="text" className="form-control" id="inputZip" 
@@ -79,6 +94,7 @@ function EditarProduto(){
                     {...register('name')} />
                     {errors.name && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.name.message}</p>)}
                 </div>
+                {/* Preço do produto: */}
                 <div style={{display: 'flex', flexDirection: 'row'}}>
                     <div className="col-md-4" style={{marginRight: '10px'}}>
                         <label htmlFor="inputState" className="form-label">Preço unitário:</label>
@@ -87,6 +103,7 @@ function EditarProduto(){
                         />
                         {errors.price && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.price.message}</p>)}
                     </div>
+                    {/* Quantidade do produto: */}
                     <div className="col-md-3" style={{marginRight: '5px'}}>
                         <label htmlFor="inputState" className="form-label">Quantidade:</label>
                         <input type="number" className="form-control" id="inputZip" placeholder={product?.qtd} 
@@ -94,6 +111,7 @@ function EditarProduto(){
                         />
                         {errors.qtd && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.qtd.message}</p>)}
                     </div>
+                    {/* Qual o tipo da quantidade: */}
                     <div className="input-group" style={{height: '2.2rem', width:'6rem', marginTop:'30px'}}>
                         <select className="form-select" id="inputGroupSelect01" {...register('qtdType')}>
                             <option value={product?.qtdType}>{product?.qtdType}</option>
@@ -103,6 +121,7 @@ function EditarProduto(){
                         </select>
                     </div>
                 </div>
+                {/* Descrição do produto: */}
                 <div className="col-md-10">
                     <label htmlFor="inputCity" className="form-label">Descrição:</label>
                     <textarea name="inputCity" className="form-control" id="inputCity" rows="3" {...register('description')} placeholder={product?.description}></textarea>
