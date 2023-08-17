@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import useLoginContext from '../hooks/useLoginContext'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { LogOutIcon, UserIcon } from '../icones/icones';
 
@@ -18,21 +18,28 @@ function BarraMenu(){
         goTo('/')
     }
     return(
-        <div style={{display: 'flex', justifyContent: 'space-between', backgroundColor: '#CCC'}}>
-            <h3>User Store</h3>
+        <div style={{display: 'flex', justifyContent: 'space-between', backgroundColor: '#CCC', height: '3.6rem'}}>
+            <Link to={(user[0].master === true)? '/produtos':'/'} style={{
+                marginLeft: '20px',
+                textDecoration: 'none',
+                color: 'black',
+                fontWeight: '600',
+                fontSize: '2rem'
+            }}>User Store</Link>
+            <h3 style={{marginTop: '10px'}}>Titulo da página</h3>
             <ul className="nav justify-content-end">
                 {logged ?
-                (<div>
-                    <li style={{display: 'inline', marginRight: '20px', color: 'black'}}>{UserIcon} {user[0]?.name}</li>
+                (<div style={{display: 'flex', flexDirection: 'row'}}>
+                    <li style={{display: 'inline', marginRight: '20px', color: 'black', marginTop: '16px'}}>{UserIcon} {user[0]?.name}</li>
                     <button onClick={handleLogOut} style={{
-                        marginRight: '20px',
-                        marginTop: '5px',
-                        outline: 'none',
                         border: 'none',
-                        color: 'white',
+                        outline: 'none',
                         backgroundColor: 'transparent',
-                        fontWeight: '600'
-                        }}>Log out {LogOutIcon}</button>
+                        fontSize: '0.9rem',
+                        marginRight: '20px',
+                        marginTop: '-30px'
+                    }}
+                    >Log out {LogOutIcon}</button>
                 </div>):
                 ('')
                 }

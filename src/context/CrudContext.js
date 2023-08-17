@@ -18,7 +18,7 @@ function CrudContextProvider({children}){
     const atualizarDados = ()=>{
         const conteudo = JSON.parse(localStorage.getItem(productsKey) || '[]')
         const idAtual = Number(conteudo[conteudo.length-1]?.id)
-        if(!isNaN(idAtual)){
+        if(!isNaN(idAtual) && conteudo !== null){
             setId(idAtual+1)
         }
         setProducts(conteudo)
@@ -49,12 +49,20 @@ function CrudContextProvider({children}){
         // atualiza o estado dos produtos e envia pro localStorage:
         setProducts(products)
         localStorage.setItem(productsKey, JSON.stringify(products))
-
-        return
     }
     
+    const clearItem = (id)=>{
+        const newProduct = products.filter(product => product.id !== id)
+        if(newProduct.length === 0){
+            localStorage.setItem(productsKey ,JSON.stringify(newProduct))
+            setProducts([])
+            setId(0)
+        }else{
+            setProducts(newProduct)
+        }
+    }
     return (
-        <CrudContext.Provider value={{products, addProduct, editProduct, atualizarDados}} >
+        <CrudContext.Provider value={{products, addProduct, editProduct, atualizarDados, clearItem}} >
             {children}
         </CrudContext.Provider>
     )

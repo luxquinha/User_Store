@@ -16,7 +16,7 @@ function MainRoutes(){
     return(
         <BrowserRouter>
           <BarraMenu/>
-          <div className="conteudo" style={{width: '100vw', height: '87.9vh'}}>
+          <div className="conteudo" style={{width: '100vw', height: '87.2vh'}}>
             <Routes>
                 <Route path='/' element={<SignIn/>}/>
                 <Route path='/signUp' element={<SignUp/>}/>

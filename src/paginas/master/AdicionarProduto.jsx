@@ -41,7 +41,7 @@ function AdicionarProduto(){
                 </div>
                 <div style={{display: 'flex', flexDirection: 'row'}}>
                     <div className="col-md-4" style={{marginRight: '10px'}}>
-                        <label htmlFor="inputState" className="form-label">Preço:</label>
+                        <label htmlFor="inputState" className="form-label">Preço unitário:</label>
                         <input type="text" className="form-control" id="inputZip" placeholder="R$ 00.00" 
                         {...register('price')}
                         />
@@ -70,7 +70,7 @@ function AdicionarProduto(){
                     </textarea>
                     {errors.description && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.description.message}</p>)}
                 </div>
-                    <button type="submit" className="btn btn-outline-primary col-md-10">Adicionar ao Estoque</button>
+                    <button type="submit" className="btn btn-outline-success col-md-10">Adicionar ao Estoque</button>
             </form>
         </div>
     )

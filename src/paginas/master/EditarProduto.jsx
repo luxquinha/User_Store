@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import useCrudContext from "../../hooks/useCrudContext"
 import {useParams, useNavigate} from 'react-router-dom'
+import { EditionIcon } from "../../icones/icones"
 import 'bootstrap/dist/css/bootstrap.min.css'
 
     const objectFormSchema = z.object({
@@ -24,10 +25,14 @@ function EditarProduto(){
         mode: 'onSubmit',
         resolver: zodResolver(objectFormSchema)
     })
-
     useEffect(()=>{
-        setProduct(products[id])
+        setProduct(findEquivalenteProduct())
     },[id])
+
+    const findEquivalenteProduct = ()=>{
+        const Equivalente = products.filter(product => product.id === id)
+        return Equivalente[0]
+    }
 
     const nonChanges = (data)=>{
         if(data.name === ''){
@@ -76,7 +81,7 @@ function EditarProduto(){
                 </div>
                 <div style={{display: 'flex', flexDirection: 'row'}}>
                     <div className="col-md-4" style={{marginRight: '10px'}}>
-                        <label htmlFor="inputState" className="form-label">Preço:</label>
+                        <label htmlFor="inputState" className="form-label">Preço unitário:</label>
                         <input type="text" className="form-control" id="inputZip" placeholder={product?.price}
                         {...register('price')}
                         />
@@ -103,7 +108,7 @@ function EditarProduto(){
                     <textarea name="inputCity" className="form-control" id="inputCity" rows="3" {...register('description')} placeholder={product?.description}></textarea>
                     {errors.description && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.description.message}</p>)}
                 </div>
-                    <button type="submit" className="btn btn-outline-primary col-md-10">Salvar Produto</button>
+                    <button type="submit" className="btn btn-outline-success col-md-10">{EditionIcon} Editar Produto</button>
             </form>
         </div>
     )

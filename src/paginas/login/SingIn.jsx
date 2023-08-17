@@ -10,6 +10,7 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 // Contexto no qual a aplicação está inserida:
 import useLoginContext from '../../hooks/useLoginContext.js'
+import {GmailIcon, PasswordIcon} from '../../icones/icones.js'
 
 const userFormSchema = z.object({
     email: z.string().nonempty('Campo obrigatório').email('Formato de email inválido'),
@@ -34,19 +35,29 @@ function SignIn(){
 
     return(
         <div style={{height: '100%',display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
-            <form style={{width: '30rem', height: '20rem', display:'flex', flexDirection: 'column' ,alignItems: 'center', justifyContent: 'center'}}
+            <form style={{
+                width: '30rem', 
+                height: '20rem', 
+                display:'flex', 
+                flexDirection: 'column',
+                alignItems: 'center', 
+                justifyContent: 'center',
+                textAlign: 'left'
+            }}
             onSubmit={handleSubmit(userValidation)} >
                 <div className="mb-3 col-md-6">
-                    <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+                    <label htmlFor="exampleInputEmail1" className="form-label" style={{fontWeight: '500'}}>{GmailIcon} Email address</label>
                     <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                     {...register('email')}
+                    placeholder='usuario@luc.com.br'
                     />
                     {errors.email && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.email.message}</p>)}
                 </div>
                 <div className="mb-3 col-md-6">
-                    <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                    <label htmlFor="exampleInputPassword1" className="form-label" style={{fontWeight: '500'}}>{PasswordIcon} Password</label>
                     <input type="password" className="form-control" id="exampleInputPassword1"
                     {...register('password')}
+                    placeholder='Digite sua senha'
                     />
                     {errors.password && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.password.message}</p>)}
                 </div>
