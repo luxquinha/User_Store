@@ -43,14 +43,20 @@ function CrudContextProvider({children}){
         setProducts(newProduct)
         alert('Produto cadastrado com sucesso!')
     }
+    
+    const findIndexProduct = (id)=>{
+        const index = products.findIndex(product => product.id === id)
+        return index
+    }
     // Função que recebe os dados e edita um produto existente:
     const editProduct = (productEditted, idProduct)=>{
         atualizarDados()
-        products[idProduct].name = productEditted.name
-        products[idProduct].price = productEditted.price
-        products[idProduct].qtd = productEditted.qtd
-        products[idProduct].qtdType = productEditted.qtdType
-        products[idProduct].description = productEditted.description
+        const id = findIndexProduct(idProduct)
+        products[id].name = productEditted.name
+        products[id].price = productEditted.price
+        products[id].qtd = productEditted.qtd
+        products[id].qtdType = productEditted.qtdType
+        products[id].description = productEditted.description
         // atualiza o estado dos produtos e envia pro localStorage:
         setProducts(products)
         localStorage.setItem(productsKey, JSON.stringify(products))

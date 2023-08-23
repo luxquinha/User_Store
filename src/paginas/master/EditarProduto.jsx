@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import {useParams, useNavigate} from 'react-router-dom'
 // Contexto da página:
 import useCrudContext from "../../hooks/useCrudContext"
+import useLoginContext from '../../hooks/useLoginContext'
 // Ícones da página:
 import { EditionIcon } from "../../icones/icones"
 
@@ -25,6 +26,7 @@ import { EditionIcon } from "../../icones/icones"
 function EditarProduto(){
     // Chamando variavéis e funções do contexto em que a página está inserida:
     const { products, editProduct } = useCrudContext()
+    const { setTitlePage } = useLoginContext()
     // Responsável por setar o produto correto para edição:
     const [product, setProduct] = useState({})
     let { id }= useParams()
@@ -38,6 +40,7 @@ function EditarProduto(){
     })
     // Atualiza o produto sempre que mudar o parâmetro id da URL:
     useEffect(()=>{
+        setTitlePage('Edit Product')
         setProduct(findEquivalenteProduct())
     },[id])
     // Encontra o produto de acordo com o id vindo da URL e retorna:
@@ -87,7 +90,7 @@ function EditarProduto(){
             >
                 {/* Nome do produto: */}
                 <div className="col-md-10">
-                    <label htmlFor="inputZip" className="form-label">Nome:</label>
+                    <label htmlFor="inputZip" className="form-label">Name:</label>
                     <input type="text" className="form-control" id="inputZip" 
                     placeholder={`${product?.name}`} 
                     onChange={(event)=>setProduct.name(event.target.value)}
@@ -97,7 +100,7 @@ function EditarProduto(){
                 {/* Preço do produto: */}
                 <div style={{display: 'flex', flexDirection: 'row'}}>
                     <div className="col-md-4" style={{marginRight: '10px'}}>
-                        <label htmlFor="inputState" className="form-label">Preço unitário:</label>
+                        <label htmlFor="inputState" className="form-label">Unit price:</label>
                         <input type="text" className="form-control" id="inputZip" placeholder={product?.price}
                         {...register('price')}
                         />
@@ -105,7 +108,7 @@ function EditarProduto(){
                     </div>
                     {/* Quantidade do produto: */}
                     <div className="col-md-3" style={{marginRight: '5px'}}>
-                        <label htmlFor="inputState" className="form-label">Quantidade:</label>
+                        <label htmlFor="inputState" className="form-label">Quantity:</label>
                         <input type="number" className="form-control" id="inputZip" placeholder={product?.qtd} 
                         {...register('qtd')}
                         />
@@ -123,11 +126,11 @@ function EditarProduto(){
                 </div>
                 {/* Descrição do produto: */}
                 <div className="col-md-10">
-                    <label htmlFor="inputCity" className="form-label">Descrição:</label>
+                    <label htmlFor="inputCity" className="form-label">Description:</label>
                     <textarea name="inputCity" className="form-control" id="inputCity" rows="3" {...register('description')} placeholder={product?.description}></textarea>
                     {errors.description && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.description.message}</p>)}
                 </div>
-                    <button type="submit" className="btn btn-outline-success col-md-10">{EditionIcon} Editar Produto</button>
+                    <button type="submit" className="btn btn-outline-success col-md-10">{EditionIcon} Edit Product</button>
             </form>
         </div>
     )

@@ -11,7 +11,7 @@ import { LogOutIcon, UserIcon } from '../icones/icones';
 
 function BarraMenu(){
     // Chamando estados para definir qual barra de menu apresentar:
-    const {logged, userLogged: user, setLogged: isLogged, setUserLogged: actualUser} = useLoginContext()
+    const {logged, userLogged: user, setLogged: isLogged, setUserLogged: actualUser, titlePage} = useLoginContext()
     // Navegar entre páginas:
     const goTo = useNavigate()
     // Se houver um usuário ativo ele atualiza o estado:
@@ -39,7 +39,7 @@ function BarraMenu(){
             }}>User Store</Link>
             {/* Titulo da página: */}
             {logged ? (
-                <h3 style={{marginTop: '10px'}}>Titulo da página</h3>
+                <h3 style={{marginTop: '10px', color: 'gray'}}>{titlePage}</h3>
             ):
             ('')}
             {/* Retorna um menu de acordo com o estado do usuário: */}

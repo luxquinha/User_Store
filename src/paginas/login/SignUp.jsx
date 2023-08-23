@@ -56,6 +56,7 @@ function SignUp(){
                     <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                     {...register('email')}
                     placeholder='usuario@luc.com.br'
+                    autoComplete='off'
                     />
                     {errors.email && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.email.message}</p>)}
                 </div>
@@ -64,7 +65,7 @@ function SignUp(){
                     <label htmlFor="exampleInputPassword1" className="form-label" style={{fontWeight: '500'}}>{PasswordIcon} Password</label>
                     <input type="password" className="form-control" id="exampleInputPassword1"
                     {...register('password')}
-                    placeholder='Digite sua senha'
+                    placeholder='Enter your password'
                     />
                     {errors.password && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.password.message}</p>)}
                 </div>
@@ -73,7 +74,7 @@ function SignUp(){
                     <label htmlFor="exampleInputPassword1" className="form-label" style={{fontWeight: '500'}}>{PasswordIcon} Confirm password</label>
                     <input type="password" className="form-control" id="exampleInputPassword2"
                     {...register('confirmPassword')}
-                    placeholder='Confirme sua senha'
+                    placeholder='Confirm your password'
                     />
                     {errors.confirmPassword && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.confirmPassword.message}</p>)}
                 </div>

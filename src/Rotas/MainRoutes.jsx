@@ -17,7 +17,7 @@ function MainRoutes(){
     return(
         <BrowserRouter>
           <BarraMenu/>
-          <div className="conteudo" style={{width: '100vw', height: '87.2vh'}}>
+          <div className="conteudo" style={{width: '100vw', height: '84vh'}}>
             {/* // Rotas de toda a aplicação: */}
             <Routes>
                 {/* Rotas públicas: */}

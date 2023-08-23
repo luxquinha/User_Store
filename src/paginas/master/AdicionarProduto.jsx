@@ -1,5 +1,7 @@
 // Biblioteca de estilização:
 import 'bootstrap/dist/css/bootstrap.min.css'
+// Hook para atualizar os dados ao renderizar a página:
+import React, {useEffect} from 'react'
 // Responsáveis pela validação do form:
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -8,6 +10,7 @@ import { z } from "zod"
 import { useNavigate } from 'react-router-dom'
 // Contexto da página:
 import useCrudContext from '../../hooks/useCrudContext.js'
+import useLoginContext from '../../hooks/useLoginContext.js'
 
     // Fazendo a validação do from com a biblioteca 'zod':
     const objectFormSchema = z.object({
@@ -23,11 +26,16 @@ function AdicionarProduto(){
     const goTo = useNavigate()
     // Chamando uma função do contexto em que a página está inserida:
     const { addProduct } = useCrudContext()
+    const { setTitlePage } = useLoginContext()
     // Métodos e estados para as entradas do form:
     const { register, handleSubmit, formState:{errors} } = useForm({
         resolver: zodResolver(objectFormSchema),
         mode: 'onSubmit'
     })
+    // Quando a página renderizar o título da página será atualizado:
+    useEffect(()=>{
+        setTitlePage('Products Registration')
+    },[])
     // Função que adiciona o produto e muda de página:
     const createProduct = (data)=>{
         addProduct(data)
@@ -41,7 +49,7 @@ function AdicionarProduto(){
             >
                 {/* Nome do produto: */}
                 <div className="col-md-10">
-                    <label htmlFor="inputZip" className="form-label">Nome:</label>
+                    <label htmlFor="inputZip" className="form-label">Name:</label>
                     <input type="text" className="form-control" id="inputZip" placeholder="Nome do produto" 
                     {...register('name')}
                     />
@@ -50,7 +58,7 @@ function AdicionarProduto(){
                 {/* Preço do produto: */}
                 <div style={{display: 'flex', flexDirection: 'row'}}>
                     <div className="col-md-4" style={{marginRight: '10px'}}>
-                        <label htmlFor="inputState" className="form-label">Preço unitário:</label>
+                        <label htmlFor="inputState" className="form-label">Unit price:</label>
                         <input type="text" className="form-control" id="inputZip" placeholder="R$ 00.00" 
                         {...register('price')}
                         />
@@ -58,7 +66,7 @@ function AdicionarProduto(){
                     </div>
                     {/* Quantidade do produto: */}
                     <div className="col-md-3" style={{marginRight: '5px'}}>
-                        <label htmlFor="inputState" className="form-label">Quantidade:</label>
+                        <label htmlFor="inputState" className="form-label">Quantity:</label>
                         <input type="number" className="form-control" id="inputZip" placeholder="0" 
                         {...register('qtd')}
                         />
@@ -76,13 +84,13 @@ function AdicionarProduto(){
                 </div>
                 {/* Descrição do produto: */}
                 <div className="col-md-10">
-                    <label htmlFor="inputCity" className="form-label">Descrição:</label>
+                    <label htmlFor="inputCity" className="form-label">Description:</label>
                     <textarea name="inputCity" className="form-control" id="inputCity" rows="3" 
                     {...register('description')}>
                     </textarea>
                     {errors.description && (<p style={{fontSize: '0.8rem', color: 'red'}}>{errors.description.message}</p>)}
                 </div>
-                    <button type="submit" className="btn btn-outline-success col-md-10">Adicionar ao Estoque</button>
+                    <button type="submit" className="btn btn-outline-success col-md-10">Add to Store</button>
             </form>
         </div>
     )

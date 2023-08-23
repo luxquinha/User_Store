@@ -7,9 +7,11 @@ export const LoginProvider = ({children})=>{
     // Chave para povoar o localStorage:
     const usuariosCadastradosKey = 'usuarios' 
     // Estados do contexto:
+    const [titlePage, setTitlePage] = useState('')
     const [logged, setLogged] = useState(false)
     const [createId, setCreateId] = useState(1)
     const [timeLogIn, setTimeLogIn] = useState()
+    const [dataLogin, setDataLogin] = useState()
     const [userLogged, setUserLogged] = useState({})
     const [users, setUsers] = useState([{
         id: 0,
@@ -56,10 +58,11 @@ export const LoginProvider = ({children})=>{
             let match = passwordMatch(data.password, actualUser[0]?.password)
             // Se for válido, ele atualiza os estados para confirmar a veracidade dos dados e retorna true:
             if(match){
-                let timeOfLog = new Date().toLocaleTimeString()
+                let dataInfo = new Date()
                 setLogged(true)
                 setUserLogged(actualUser)
-                setTimeLogIn(timeOfLog)
+                setTimeLogIn(dataInfo.toLocaleTimeString())
+                setDataLogin(dataInfo.toLocaleDateString())
                 return true
             }
             else{
@@ -106,7 +109,7 @@ export const LoginProvider = ({children})=>{
 
     return(
         // Envolve o children com o contexto e envia estados e funções para a aplicação:
-        <LoginContext.Provider value={{isValid, setLogged, logged, userLogged, setUserLogged, timeLogIn, createUser}}>
+        <LoginContext.Provider value={{isValid, setLogged, logged, userLogged, setUserLogged, timeLogIn, dataLogin, createUser, titlePage, setTitlePage}}>
             {children}
         </LoginContext.Provider>
     )
